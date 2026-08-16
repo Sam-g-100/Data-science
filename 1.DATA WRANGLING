@@ -1,0 +1,165 @@
+1
+
+# =========================================
+# DATA WRANGLING USING PYTHON
+# =========================================
+
+# Import libraries
+# pandas -> data handling
+# numpy  -> numerical operations
+
+import pandas as pd
+import numpy as np
+
+
+# =========================================
+# LOAD DATASET
+# =========================================
+
+# Read Titanic CSV file into DataFrame
+# DataFrame = table-like structure
+
+df = pd.read_csv("titanic.csv")
+
+
+# =========================================
+# DISPLAY FIRST 5 ROWS
+# =========================================
+
+# head() shows first 5 rows
+
+print("\nFirst 5 Rows")
+print(df.head())
+
+
+# =========================================
+# DATASET INFORMATION
+# =========================================
+
+# info() displays:
+# - column names
+# - datatypes
+# - non-null values
+
+print("\nDataset Information")
+print(df.info())
+
+
+# =========================================
+# SHAPE OF DATASET
+# =========================================
+
+# shape returns:
+# (rows, columns)
+
+print("\nShape of Dataset")
+print(df.shape)
+
+
+# =========================================
+# CHECK MISSING VALUES
+# =========================================
+
+# isnull() checks missing values
+# sum() counts total missing values
+
+print("\nMissing Values")
+print(df.isnull().sum())
+
+
+# =========================================
+# STATISTICAL SUMMARY
+# =========================================
+
+# describe() gives:
+# - Count
+# - Mean
+# - Standard Deviation
+# - Min & Max
+# - Quartiles
+
+print("\nStatistical Summary")
+print(df.describe())
+
+
+# =========================================
+# CHECK DATA TYPES
+# =========================================
+
+# dtypes shows datatype of each column
+
+print("\nData Types")
+print(df.dtypes)
+
+
+# =========================================
+# TYPE CONVERSION
+# =========================================
+
+# Convert Survived column into category type
+# 0 -> Not Survived
+# 1 -> Survived
+
+df['Survived'] = df['Survived'].astype('category')
+
+print("\nAfter Type Conversion")
+print(df.dtypes)
+
+
+# =========================================
+# DATA NORMALIZATION
+# =========================================
+
+# Normalize Age column between 0 and 1
+#
+# Formula:
+# x' = (x - xmin) / (xmax - xmin)
+
+df['Age_Normalized'] = (
+    (df['Age'] - df['Age'].min()) /
+    (df['Age'].max() - df['Age'].min())
+)
+
+print("\nNormalized Age Column")
+print(df[['Age', 'Age_Normalized']].head())
+
+
+# =========================================
+# LABEL ENCODING
+# =========================================
+
+# Convert categorical values into numeric
+# male -> 0
+# female -> 1
+
+df['Sex'] = df['Sex'].map({
+    'male': 0,
+    'female': 1
+})
+
+print("\nEncoded Sex Column")
+print(df[['Sex']].head())
+
+
+# =========================================
+# ONE HOT ENCODING
+# =========================================
+
+# Convert Embarked categories into binary columns
+# Example:
+# Embarked_C, Embarked_Q, Embarked_S
+
+df = pd.get_dummies(df, columns=['Embarked'])
+
+print("\nAfter One Hot Encoding")
+print(df.head())
+
+
+# =========================================
+# FINAL DATASET INFO
+# =========================================
+
+# Final dataset after preprocessing
+
+print("\nFinal Dataset Info")
+print(df.info())
