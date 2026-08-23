@@ -20,7 +20,6 @@ import numpy as np
 
 # ------------------------------- 
 # STEP 1 : Create Dataset 
-# ------------------------------- 
 # Dataset contains: 
 # Student name, marks, and attendance 
 # 
@@ -56,7 +55,6 @@ print(df.isnull().sum())
 
 # ------------------------------- 
 # STEP 3 : Handle Missing Values 
-# ------------------------------- 
 # fillna() replaces missing values 
 # 
 # Mean Formula: 
@@ -75,7 +73,6 @@ print(df)
 
 # ------------------------------- 
 # STEP 4 : Handle Inconsistencies 
-# ------------------------------- 
 # clip(min,max) keeps values within range 
 # 
 # Marks and attendance cannot exceed 100 
@@ -94,7 +91,6 @@ print(df)
 
 # ------------------------------- 
 # STEP 5 : Detect and Handle Outliers 
-# ------------------------------- 
 # Outlier: 
 # Extremely high or low value compared to others 
 # 
@@ -140,7 +136,7 @@ print(df)
 
 # ------------------------------- 
 # STEP 6 : Data Transformation 
-# ------------------------------- 
+
 # Min-Max Normalization 
 # 
 # Formula: 
