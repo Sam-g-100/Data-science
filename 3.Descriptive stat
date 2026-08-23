@@ -1,0 +1,242 @@
+
+
+# ========================================================= 
+# DESCRIPTIVE STATISTICS 
+# Measures of Central Tendency and Variability 
+# ========================================================= 
+
+# Import Required Libraries 
+import pandas as pd 
+import numpy as np 
+
+# --------------------------------------------------------- 
+# STEP 1 : Create Dataset 
+# --------------------------------------------------------- 
+# Name        -> Student/Person Name 
+# Age_Group   -> Categorical Variable 
+# Income      -> Numerical Variable 
+
+data = { 
+    "Name": ["Amit", "Neha", "Raj", "Priya", "Kiran", 
+             "Sara", "Tom", "Anu", "Ravi", "John"], 
+
+    "Age_Group": ["18-20", "18-20", "21-23", "21-23", "18-20", 
+                  "21-23", "18-20", "21-23", "18-20", "21-23"], 
+
+    "Income": [25000, 30000, 40000, 35000, 28000, 
+               45000, 32000, 38000, 29000, 42000] 
+} 
+
+# Convert dictionary into DataFrame 
+df = pd.DataFrame(data) 
+
+print("------------ DATASET ------------") 
+print(df) 
+
+# --------------------------------------------------------- 
+# STEP 2 : Group Data by Categorical Variable 
+# --------------------------------------------------------- 
+# groupby() groups rows having same Age_Group 
+# Here we group Income according to Age_Group 
+# To divide data into groups based on categories. 
+
+group = df.groupby("Age_Group")["Income"] 
+
+# --------------------------------------------------------- 
+# STEP 3 : Calculate Descriptive Statistics 
+# --------------------------------------------------------- 
+
+print("\n------------ SUMMARY STATISTICS ------------") 
+
+# Mean = Average value 
+# Formula: 
+# Mean = Sum of all observations / Number of observations 
+
+print("Mean") 
+print(group.mean()) 
+
+# Median = Middle value after sorting data 
+# Used when data contains outliers 
+
+print("\nMedian") 
+print(group.median()) 
+
+# Minimum = Smallest value in group 
+
+print("\nMinimum") 
+print(group.min()) 
+
+# Maximum = Largest value in group 
+
+print("\nMaximum") 
+print(group.max()) 
+
+# Standard Deviation = Measure of data spread 
+# Small SD -> data close to mean 
+# Large SD -> data widely spread 
+
+print("\nStandard Deviation") 
+print(group.std()) 
+
+# --------------------------------------------------------- 
+# STEP 4 : Create List of Income for Each Age Group 
+# --------------------------------------------------------- 
+# apply(list) converts grouped values into list format 
+
+print("\n------------ INCOME LIST BY AGE GROUP ------------") 
+
+income_list = group.apply(list) 
+
+print(income_list) 
+
+# ========================================================= 
+# THEORY / VIVA POINTS 
+# ========================================================= 
+# 1. Central Tendency: 
+#    - Mean 
+#    - Median 
+#    - Mode 
+# 
+# 2. Variability Measures: 
+#    - Range 
+#    - Variance 
+#    - Standard Deviation 
+# 
+# 3. groupby(): 
+#    Used to split data into groups based on categories. 
+# 
+# 4. DataFrame: 
+#    Two-dimensional table in pandas. 
+# 
+# 5. Why Standard Deviation is important? 
+#    It shows how much data varies from the average. 
+# 
+# 6. Difference between Mean and Median: 
+#    Mean  -> affected by extreme values 
+#    Median -> not affected by outliers 
+# ========================================================= 
+
+Part 2 
+
+
+# ========================================================= 
+# DESCRIPTIVE STATISTICS ON IRIS DATASET 
+# Measures of Central Tendency and Variability 
+# ========================================================= 
+
+# Import pandas library 
+# pandas is used for data analysis and handling tables 
+import pandas as pd 
+
+# --------------------------------------------------------- 
+# STEP 1 : Load Iris Dataset 
+# --------------------------------------------------------- 
+
+# read_csv() is used to read CSV file 
+# iris.csv must be present in same folder 
+
+df = pd.read_csv("iris.csv") 
+
+# Display first 5 rows of dataset 
+# head() shows top records 
+
+print("------------ FIRST 5 RECORDS ------------") 
+print(df.head()) 
+
+# --------------------------------------------------------- 
+# IMPORTANT INFORMATION ABOUT IRIS DATASET 
+# --------------------------------------------------------- 
+# Iris dataset contains flower measurements. 
+
+# Features: 
+# 1. sepal_length 
+# 2. sepal_width 
+# 3. petal_length 
+# 4. petal_width 
+# 5. species (target/category) 
+
+# Species Types: 
+# 1. setosa 
+# 2. versicolor 
+# 3. virginica 
+
+# Numerical Columns: 
+# sepal_length, sepal_width, petal_length, petal_width 
+
+# Categorical Column: 
+# species 
+
+# --------------------------------------------------------- 
+# STEP 2 : Group Data by Species 
+# --------------------------------------------------------- 
+# groupby() groups rows having same species 
+
+group = df.groupby("species") 
+
+# Example: 
+# All setosa flowers grouped together 
+# All versicolor flowers grouped together 
+# All virginica flowers grouped together 
+
+# --------------------------------------------------------- 
+# STEP 3 : Display Descriptive Statistics 
+# --------------------------------------------------------- 
+
+# for loop is used to access each group one by one 
+
+for name, data in group: 
+
+    print("\n===================================") 
+    print("Species :", name) 
+    print("===================================") 
+
+    # ----------------------------------------------------- 
+    # MEAN 
+    # ----------------------------------------------------- 
+    # Mean = Average value 
+    # Formula: 
+    # Mean = Sum of observations / Total observations 
+
+    print("\nMean") 
+    print(data.mean(numeric_only=True)) 
+
+    # ----------------------------------------------------- 
+    # MEDIAN 
+    # ----------------------------------------------------- 
+    # Median = Middle value after sorting 
+    # Less affected by outliers 
+
+    print("\nMedian") 
+    print(data.median(numeric_only=True)) 
+
+    # ----------------------------------------------------- 
+    # STANDARD DEVIATION 
+    # ----------------------------------------------------- 
+    # std() measures spread of data 
+    # Small SD -> data close to mean 
+    # Large SD -> data widely spread 
+
+    print("\nStandard Deviation") 
+    print(data.std(numeric_only=True)) 
+
+    # ----------------------------------------------------- 
+    # PERCENTILES / QUARTILES 
+    # ----------------------------------------------------- 
+    # 0.25 -> First Quartile (Q1) 
+    # 0.50 -> Second Quartile (Q2 / Median) 
+    # 0.75 -> Third Quartile (Q3) 
+
+    print("\nPercentile") 
+    print(data.quantile([0.25, 0.5, 0.75], numeric_only=True)) 
+
+# ========================================================= 
+# IMPORTANT THEORY 
+# ========================================================= 
+
+# Quartiles: 
+# Q1 -> 25% data 
+# Q2 -> 50% data (Median) 
+# Q3 -> 75% data 
+
+# numeric_only=True: 
+# Calculates statistics only on numerical columns.
