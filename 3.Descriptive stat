@@ -11,7 +11,7 @@ import numpy as np
 
 # --------------------------------------------------------- 
 # STEP 1 : Create Dataset 
-# --------------------------------------------------------- 
+
 # Name        -> Student/Person Name 
 # Age_Group   -> Categorical Variable 
 # Income      -> Numerical Variable 
@@ -35,7 +35,7 @@ print(df)
 
 # --------------------------------------------------------- 
 # STEP 2 : Group Data by Categorical Variable 
-# --------------------------------------------------------- 
+ 
 # groupby() groups rows having same Age_Group 
 # Here we group Income according to Age_Group 
 # To divide data into groups based on categories. 
@@ -44,7 +44,7 @@ group = df.groupby("Age_Group")["Income"]
 
 # --------------------------------------------------------- 
 # STEP 3 : Calculate Descriptive Statistics 
-# --------------------------------------------------------- 
+
 
 print("\n------------ SUMMARY STATISTICS ------------") 
 
@@ -80,7 +80,7 @@ print(group.std())
 
 # --------------------------------------------------------- 
 # STEP 4 : Create List of Income for Each Age Group 
-# --------------------------------------------------------- 
+
 # apply(list) converts grouped values into list format 
 
 print("\n------------ INCOME LIST BY AGE GROUP ------------") 
@@ -91,7 +91,7 @@ print(income_list)
 
 # ========================================================= 
 # THEORY / VIVA POINTS 
-# ========================================================= 
+
 # 1. Central Tendency: 
 #    - Mean 
 #    - Median 
@@ -122,7 +122,7 @@ Part 2
 # ========================================================= 
 # DESCRIPTIVE STATISTICS ON IRIS DATASET 
 # Measures of Central Tendency and Variability 
-# ========================================================= 
+
 
 # Import pandas library 
 # pandas is used for data analysis and handling tables 
@@ -130,7 +130,7 @@ import pandas as pd
 
 # --------------------------------------------------------- 
 # STEP 1 : Load Iris Dataset 
-# --------------------------------------------------------- 
+
 
 # read_csv() is used to read CSV file 
 # iris.csv must be present in same folder 
@@ -145,7 +145,6 @@ print(df.head())
 
 # --------------------------------------------------------- 
 # IMPORTANT INFORMATION ABOUT IRIS DATASET 
-# --------------------------------------------------------- 
 # Iris dataset contains flower measurements. 
 
 # Features: 
@@ -168,7 +167,6 @@ print(df.head())
 
 # --------------------------------------------------------- 
 # STEP 2 : Group Data by Species 
-# --------------------------------------------------------- 
 # groupby() groups rows having same species 
 
 group = df.groupby("species") 
@@ -180,8 +178,6 @@ group = df.groupby("species")
 
 # --------------------------------------------------------- 
 # STEP 3 : Display Descriptive Statistics 
-# --------------------------------------------------------- 
-
 # for loop is used to access each group one by one 
 
 for name, data in group: 
@@ -192,7 +188,6 @@ for name, data in group:
 
     # ----------------------------------------------------- 
     # MEAN 
-    # ----------------------------------------------------- 
     # Mean = Average value 
     # Formula: 
     # Mean = Sum of observations / Total observations 
