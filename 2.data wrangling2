@@ -1,0 +1,172 @@
+# ========================================================= 
+# DATA WRANGLING II : Academic Performance Dataset 
+# ========================================================= 
+# Aim: 
+# Perform Data Cleaning and Data Transformation using Python 
+# 
+# Concepts Used: 
+# 1. Handling Missing Values 
+# 2. Handling Inconsistent Data 
+# 3. Outlier Detection using IQR Method 
+# 4. Min-Max Normalization 
+# 
+# Libraries: 
+# pandas -> data manipulation 
+# numpy  -> numerical operations 
+# ========================================================= 
+
+import pandas as pd 
+import numpy as np 
+
+# ------------------------------- 
+# STEP 1 : Create Dataset 
+# ------------------------------- 
+# Dataset contains: 
+# Student name, marks, and attendance 
+# 
+# Problems intentionally added: 
+# 1. Missing values -> np.nan 
+# 2. Invalid values -> marks > 100 
+
+data = { 
+    "Student": ["A", "B", "C", "D", "E", "F", "G", "H"], 
+
+    "Maths": [85, 90, np.nan, 40, 150, 78, 88, 95], 
+    "Science": [80, 85, 70, np.nan, 120, 75, 82, 91], 
+    "English": [75, 88, 65, 50, 110, np.nan, 80, 92], 
+    "Attendance": [90, 95, 85, 60, 105, 88, np.nan, 96] 
+} 
+
+# Convert dictionary into DataFrame 
+df = pd.DataFrame(data) 
+
+print("------------ ORIGINAL DATASET ------------") 
+print(df) 
+
+
+# ------------------------------- 
+# STEP 2 : Check Missing Values 
+# ------------------------------- 
+# isnull() -> checks missing values 
+# sum()    -> counts total missing values 
+
+print("\n------------ MISSING VALUES ------------") 
+print(df.isnull().sum()) 
+
+
+# ------------------------------- 
+# STEP 3 : Handle Missing Values 
+# ------------------------------- 
+# fillna() replaces missing values 
+# 
+# Mean Formula: 
+# Mean = Sum of values / Total values 
+# 
+# inplace=True updates original dataset 
+
+df["Maths"].fillna(df["Maths"].mean(), inplace=True) 
+df["Science"].fillna(df["Science"].mean(), inplace=True) 
+df["English"].fillna(df["English"].mean(), inplace=True) 
+df["Attendance"].fillna(df["Attendance"].mean(), inplace=True) 
+
+print("\n------------ DATASET AFTER FILLING MISSING VALUES ------------") 
+print(df) 
+
+
+# ------------------------------- 
+# STEP 4 : Handle Inconsistencies 
+# ------------------------------- 
+# clip(min,max) keeps values within range 
+# 
+# Marks and attendance cannot exceed 100 
+# Example: 
+# 150 -> 100 
+# 120 -> 100 
+
+df["Maths"] = df["Maths"].clip(0, 100) 
+df["Science"] = df["Science"].clip(0, 100) 
+df["English"] = df["English"].clip(0, 100) 
+df["Attendance"] = df["Attendance"].clip(0, 100) 
+
+print("\n------------ AFTER REMOVING INCONSISTENCIES ------------") 
+print(df) 
+
+
+# ------------------------------- 
+# STEP 5 : Detect and Handle Outliers 
+# ------------------------------- 
+# Outlier: 
+# Extremely high or low value compared to others 
+# 
+# IQR Method: 
+# IQR = Q3 - Q1 
+# 
+# Q1 = 25th percentile 
+# Q3 = 75th percentile 
+# 
+# Lower Limit = Q1 - 1.5 * IQR 
+# Upper Limit = Q3 + 1.5 * IQR 
+
+numeric_columns = ["Maths", "Science", "English", "Attendance"] 
+
+for col in numeric_columns: 
+
+    # Find Quartiles 
+    Q1 = df[col].quantile(0.25) 
+    Q3 = df[col].quantile(0.75) 
+
+    # Interquartile Range 
+    IQR = Q3 - Q1 
+
+    # Calculate limits 
+    lower_limit = Q1 - 1.5 * IQR 
+    upper_limit = Q3 + 1.5 * IQR 
+
+    # np.where(condition, true_value, false_value) 
+    # 
+    # Replace: 
+    # values < lower_limit -> lower_limit 
+    # values > upper_limit -> upper_limit 
+
+    df[col] = np.where(df[col] < lower_limit, 
+                       lower_limit, 
+                       np.where(df[col] > upper_limit, 
+                                upper_limit, 
+                                df[col])) 
+
+print("\n------------ AFTER OUTLIER TREATMENT ------------") 
+print(df) 
+
+
+# ------------------------------- 
+# STEP 6 : Data Transformation 
+# ------------------------------- 
+# Min-Max Normalization 
+# 
+# Formula: 
+# (x - min) / (max - min) 
+# 
+# Purpose: 
+# Converts data into range 0 to 1 
+# Helps Machine Learning algorithms 
+
+df["Maths_Normalized"] = ( 
+    (df["Maths"] - df["Maths"].min()) / 
+    (df["Maths"].max() - df["Maths"].min()) 
+) 
+
+print("\n------------ AFTER NORMALIZATION ------------") 
+print(df[["Maths", "Maths_Normalized"]]) 
+
+
+# ------------------------------- 
+# FINAL CLEANED DATASET 
+# ------------------------------- 
+# Final dataset contains: 
+# 1. No missing values 
+# 2. No invalid values 
+# 3. Outliers treated 
+# 4. Normalized data 
+
+print("\n------------ FINAL CLEANED DATASET ------------") 
+print(df)
